@@ -1,6 +1,20 @@
 'use server';
 
-// A 
+
+// internalCSP = The first array element denotes the main internal Cloud Service Provider, where this application resides. Very most application will have only one CSP, where the application resides.
+// The other array elements describe other internal Cloud Service Providers, where the application interacts with. An application may interact with multiple CSPs.
+// externalCSP = External Cloud Service Providers, where the application interacts with. Typically, this will be an external SaaS service. An application may interact with multiple CSPs.
+
+type CSP = {
+    internalCSP: string[];
+    externalCSP: string[];
+}
+
+type Principal = {
+    member: string;
+    principalType: string;
+}
+
 
 type Design = {
     designTypeDoc: string;
@@ -21,11 +35,22 @@ type Group = {
 
 }
 
+type Project = {
+    projectNumber: string;
+    projectName: string;
+}
+
+type application = {
+    eim: string;
+    projects: Project[];
+}
+
 type UAC =  {
     groups: Group[]; // Change the type to allow multiple elements
 }
 
 let dummyDb: UAC = {
+
     groups: [
         {name: "Group 1", binding: "Binding 1", justification: "Justification 1"},
         {name: "Group 2", binding: "Binding 2", justification: "Justification 2"},
