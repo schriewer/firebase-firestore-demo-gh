@@ -15,3 +15,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+useLayoutEffect(() => {
+  first
+
+  return () => {
+    second
+  };
+}, [third])
