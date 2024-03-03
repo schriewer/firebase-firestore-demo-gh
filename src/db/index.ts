@@ -1,4 +1,4 @@
-'use server';
+//import { createUACForDummyDB } from '@/db';
 
 
 // internalCSP = The first array element denotes the main internal Cloud Service Provider, where this application resides. Very most application will have only one CSP, where the application resides.
@@ -28,7 +28,7 @@ type ArchitectArtifacts = {
     designs: Design[];
 }
 
-type Group = {
+export type Group = {
     name: string;
     binding: string;
     justification: string;
@@ -45,11 +45,17 @@ type application = {
     projects: Project[];
 }
 
+export type UACHeader = {
+    eim: string;
+    description: string;
+}
+
 type UAC =  {
+
     groups: Group[]; // Change the type to allow multiple elements
 }
 
-let dummyDb: UAC = {
+export let dummyDb: UAC = {
 
     groups: [
         {name: "Group 1", binding: "Binding 1", justification: "Justification 1"},
@@ -68,9 +74,12 @@ export async function createGroupForDummyDB(group: { name: string, binding: stri
     console.log("dummyDb:", dummyDb);
     dummyDb.groups.push(group);
     console.log("dummyDb after change:", dummyDb);
-
-
 }
+
+export async function createNewUACForDummyDB(uacHeader: UACHeader) {
+    
+}
+
 
 export async function addGroupToDummyDB(group: { name: string, binding: string, justification: string }) {
     console.log("addGroupToDummyDB called");

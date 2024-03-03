@@ -1,4 +1,4 @@
-import { createGroupForDummyDB } from '@/db';
+import { createGroupForDummyDB, Group } from '@/db';
 
 export default function NewGroup() {
 
@@ -16,8 +16,10 @@ export default function NewGroup() {
         console.log("justification:", justification);
         console.log("---------------------")
       
-        const group = { name: name, binding: binding, justification:justification };
+        const group:Group = { name: name, binding: binding, justification:justification };
         console.log("group:", group);
+
+        
       
         // Create a new record in the database
         await createGroupForDummyDB(group);

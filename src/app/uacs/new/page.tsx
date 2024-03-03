@@ -1,0 +1,46 @@
+import { Button } from '@radix-ui/themes';
+import { ContainerIcon } from '@radix-ui/react-icons';
+import { createNewUACForDummyDB, UACHeader } from '@/db';
+
+
+export default function UACCreatePage() {
+    async function createUAC(formData: FormData) {
+        'use server';
+
+        const eim = formData.get('eim') as string;
+        const description = formData.get('description') as string;
+
+        const uacHeader:UACHeader = { eim: eim, description: description};
+        console.log("UAC Header:", uacHeader);
+
+
+        await createNewUACForDummyDB(uacHeader);
+    }
+
+    return (
+        <div className="min-h-screen p-24">
+        <form action={createUAC}>
+                <h2 className="font-bold m-3">UACCreatePage - Create a UAC!</h2>
+                <div className="flex flex-col gap-4 my-8">
+                        <div className="flex gap-4 items-center">
+                                <label className="text-lg w-32" htmlFor="eim">EIM</label>
+                                <input type="text" name="eim" id="eim" className="p-2 rounded-md w-full" placeholder="Enter EIM" />
+                        </div>
+
+                </div>
+                
+                <div className="flex flex-col gap-4 my-8">
+                        <div className="flex gap-4 items-center">
+                                <label className="text-lg w-32" htmlFor="description">Description: </label>
+                                <textarea name="description" id="description" className="p-2 rounded-md w-full" placeholder="Enter a description of this application/service" />
+
+                        </div>
+
+                </div>
+
+                <Button type="submit">Create</Button>
+
+        </form>
+        </div>
+    );
+}

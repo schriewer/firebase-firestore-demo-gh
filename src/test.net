@@ -1,0 +1,44 @@
+using System;
+using System.IO;
+using System.Text;
+using System.Xml;
+
+class Program
+{
+    static void Main()
+    {
+        string filePath = "path/to/your/text/file.txt";
+        string outputFilePath = "path/to/your/output/file.txt";
+
+        // Read the text file
+        string text = File.ReadAllText(filePath);
+
+        // Convert non-permitted XML characters
+        string convertedText = ConvertToPermittedXmlCharacters(text);
+
+        // Write the converted text to the output file
+        File.WriteAllText(outputFilePath, convertedText);
+
+        Console.WriteLine("Conversion completed.");
+    }
+
+    static string ConvertToPermittedXmlCharacters(string text)
+    {
+        StringBuilder convertedText = new StringBuilder();
+
+        foreach (char c in text)
+        {
+            if (XmlConvert.IsXmlChar(c))
+            {
+                convertedText.Append(c);
+            }
+            else
+            {
+                // Replace non-permitted XML characters with a space
+                convertedText.Append(' ');
+            }
+        }
+
+        return convertedText.ToString();
+    }
+}

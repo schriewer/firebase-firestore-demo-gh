@@ -3,15 +3,19 @@
 
 import React from 'react';
 import { createGroupForDummyDB } from '@/db';
+import { editGroup } from '@/actions';
 
-import { Flex, Text, Button } from '@radix-ui/themes';
-
-
+interface Group {
+  name: string;
+  binding: string;
+  justification: string;
+}
 export default function Home() {
 
   async function setupGroup(formData: FormData) {
     // This needs to be a server action
     'use server';
+  
 
     // Check the user's input
     const name = formData.get('name') as string;
@@ -22,35 +26,35 @@ export default function Home() {
     console.log("group:", group);
 
     // Create a new record in the database
-    createGroupForDummyDB(group);
+    createGroupForDummyDB(formData);
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold">
-          User Authorization Concept (UAC)
-        </h1>
-
-        <div className="flex flex-col gap-4">
-           <h2 className='mt-6 py-2 text-xl text-center'>How do you want to start? </h2>
-          <Button className="p-2 rounded-md">Load an export from HGMS</Button>
-          <Button className="p-2 rounded-md">Load an existing UAC from repository</Button>
-          <Button className="p-2 rounded-md">Load a UAC from file</Button>
-          <Button className="p-2 rounded-md">Preparing a UAC from scratch</Button>
-        </div>
-
-        <div className="mt-8 flex flex-col gap-4">
-          <h2 className='mt-6 py-2 text-xl text-center'>Your current stats:</h2>
-          <Text>UAC in approved stage: 3</Text>
-          <Text>UAC in subject to recertification soon: 2</Text>
-          <Text>UAC passed recertification date: 0</Text>
-          <Text>UAC requires attention: 1 </Text>
-          <Text>UAC are awaiting your review: 5</Text>
-        </div>
-
+        Edit group
       </div>
-      
+      <form action={createGroupForDummyDB}>
+        <h3 className="items-center justify-center">Create a group</h3>
+        <div className="container p-2 mx-auto border-2 rounded flex flex-col gap-4">
+          
+          <div className="flex gap-4 border-3">
+            <label className="w-32" htmlFor="name">Group caption</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div className="flex gap-4">
+            <label className="w-32" htmlFor="binding">Binding</label>
+            <input type="text" name="binding" id="binding" />
+          </div>
+          <div className="flex gap-4">
+            <label className="w-32" htmlFor="justification">Justification</label>
+            <textarea name="justification" id="justification" />
+          </div>
+
+          <button className="bg-blue-500 text-white p-2 rounded-md">Create</button>
+        </div>
+      </form>
+
     </main>
   );
 }
